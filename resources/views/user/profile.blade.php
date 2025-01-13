@@ -6,8 +6,9 @@
 
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="container-fluid py-5">
-      <form method="POST" action="/">
+      <form method="POST" action="{{ route('user.update') }}">
                 @csrf
+                @method('PUT')
                 <div class="mb-3">
                     <label for="name">Name</label>
                     <input id="name" class="text-input" type="text" name="name"

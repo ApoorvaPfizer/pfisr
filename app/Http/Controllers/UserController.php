@@ -20,6 +20,17 @@ class UserController extends Controller
         $user = Auth::user();
         return view('user.profile', compact('user'));
     }
+    public function update(Request $request)
+    {
+          try {
+            $user = Auth::user();
+            $user->update($request->all());
+            return redirect("/profile");
+          }
+          catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 
     
 

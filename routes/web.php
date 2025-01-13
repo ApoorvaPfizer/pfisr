@@ -32,6 +32,7 @@ Route::post('/url-filter', UrlController::class . '@search')->name('url.search')
 
 Route::get('/url/{url}/generate-qrcode', [QrCodeController::class, 'generate']);
 Route::get('/profile', UserController::class . '@index')->name('user.profile');
+Route::put('/profile-edit', UserController::class .'@update')->name('user.update');
 Route::get('/{code}', UrlController::class . '@redirectfunction')->name('redirect-function');
 
 
