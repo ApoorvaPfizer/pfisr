@@ -7,6 +7,7 @@ use App\Models\Url;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 
 
@@ -70,6 +71,9 @@ class UrlController extends Controller
     {
         try {
             $url = Url::find($id);
+            if(empty($url)){
+                throw new Exception('Update failed url not found');
+            }
             return view('url.edit', compact('url'));
         }
         catch (\Exception $e) {
@@ -85,6 +89,9 @@ class UrlController extends Controller
     {
           try {
             $Url = Url::find($id);
+            if(empty($Url)){
+                throw new Exception('Update failed url not found');
+            }
             $Url->update($request->all());
             return redirect("/url-index");
           }
@@ -100,6 +107,9 @@ class UrlController extends Controller
     {
         try {
             $url = Url::find($id);
+            if(empty($url)){
+                throw new Exception('Update failed url not found');
+            }
             $url->delete();
             return redirect(route('url-index'));
         }

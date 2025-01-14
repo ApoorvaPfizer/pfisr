@@ -7,7 +7,7 @@ use App\Models\Url;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
-
+use Exception;
 
 
 class UserController extends Controller
@@ -17,13 +17,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        return view('user.profile', compact('user'));
+        try {
+            $user = Auth::user();
+            if(empty($user)){
+                throw new Exception('Please login');
+            }
+            return view('user.profile', compact('user'));
+        }
+        catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
     public function update(Request $request)
     {
           try {
             $user = Auth::user();
+            if(empty($user)){
+                throw new Exception('Please login');
+            }
             $user->update($request->all());
             return redirect("/profile");
           }
