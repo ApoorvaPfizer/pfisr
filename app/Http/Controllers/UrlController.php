@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -107,15 +108,15 @@ class UrlController extends Controller
     {
         try {
             $url = Url::find($id);
-            if(empty($url)){
-                throw new Exception('Update failed url not found');
-            }
             $url->delete();
+            DB::commit();
             return redirect(route('url-index'));
-        }
-        catch (\Exception $e) {
-            return $e->getMessage();
-        }
+            } 
+            catch (\Exception $ex)
+            { 
+              DB::rollback(); 
+              return response()->json(['error' => $ex->getMessage()], 500);
+            }        
     }
     public function redirectfunction(string $code){
         $exists = Url::where('short_url', $code)->first();
